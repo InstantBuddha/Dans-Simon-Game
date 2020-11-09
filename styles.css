@@ -1,0 +1,115 @@
+body {
+  text-align: center;
+  background-color: #011F3F;
+
+}
+
+#level-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 3rem;
+  line-height: 3.5rem;
+  margin: 3%;
+  color: #FEF2BF;
+}
+
+.container {
+  display: block;
+  /*width: 100%;*/
+  /*margin: auto;*/
+}
+
+.btn {
+  margin: 0 15px 0 15px;
+  display: inline-block;
+  height: 200px;
+  width: 200px;
+  border: 8px solid black;
+  border-radius: 40px;
+}
+
+.green {
+  background-color: green;
+  border-top-left-radius: 100%;
+}
+
+.red {
+  background-color: red;
+  border-top-right-radius: 100%;
+}
+
+.yellow {
+  background-color: yellow;
+  border-bottom-left-radius: 100%;
+}
+
+.blue {
+  background-color: blue;
+  border-bottom-right-radius: 100%;
+}
+
+.pressed {
+  box-shadow: 0 0 20px white;
+  background-color: grey;
+}
+
+.pressed1 {
+  box-shadow: 0 0 20px lime;
+  background-color: lime;
+}
+
+.pressed2 {
+  box-shadow: 0 0 20px #ff471a;
+  background-color: #ff471a;
+}
+
+.pressed3 {
+  box-shadow: 0 0 20px #ffff80;
+  background-color: #ffff80;
+}
+
+.pressed4 {
+  box-shadow: 0 0 20px RoyalBlue;
+  background-color: RoyalBlue;
+}
+
+.over {
+  background-color: grey;
+  opacity: 0.5;
+  box-shadow: 0 0 20px black;
+}
+
+.ctrl-btns {
+  height: 30px;
+  border-radius: 10px;
+  padding: 0;
+  background-color: black;
+  color: white;
+}
+
+.ctrl-right{
+  width: 88px;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+#START {
+  font-size: 32px;
+
+  margin: 5px 15px 5px 15px;
+}
+#display-div{
+  margin: 5px 1px 5px 15px;
+}
+
+#strictmode {
+  margin: 5px 15px 5px 1px;
+
+}
+
+.strict-off {
+  color: red;
+}
+
+.strict-on {
+  color: green;
+}
