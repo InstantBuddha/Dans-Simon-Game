@@ -1,36 +1,36 @@
 //global variables
 var playerCanClick = false;
 var randomSequence = [];
-var playerSequence =[]; // restarted when correct for the full sequence
+var playerSequence = []; // restarted when correct for the full sequence
 var playerSeqI = 0;
 var strictModeOn = true;
 
 //event handlers
 
-$("#1").click(()=>{
-    console.log("clicked 1");
-    playerInput(1);
+$("#1").click(() => {
+  console.log("clicked 1");
+  playerInput(1);
 });
-$("#2").click(()=>{
+$("#2").click(() => {
   console.log("clicked 2");
   playerInput(2);
 });
-$("#3").click(()=>{
+$("#3").click(() => {
   console.log("clicked 3");
   playerInput(3);
 });
-$("#4").click(()=>{
+$("#4").click(() => {
   console.log("clicked 4");
   playerInput(4);
 });
-$("#START").click(()=>{
+$("#START").click(() => {
   console.log("clicked start");
   $("#START").text("RESTART");
   restart();
-  });
-$("#strictmode").click(()=>{
+});
+$("#strictmode").click(() => {
   strictModeOn = !strictModeOn;
-  console.log("strictmode toggled to "+strictModeOn);
+  console.log("strictmode toggled to " + strictModeOn);
   $("#strictmode").toggleClass("strict-off");
   $("#strictmode").toggleClass("strict-on");
   strictModeOn ? $("#strictmode").html("STRICT MODE ON") : $("#strictmode").html("STRICT MODE OFF");
@@ -41,110 +41,91 @@ function soundAndLight(activeButton) {
   //#2 red
   //#3 yellow
   //#4 blue
-  let activeBtnTag = "#"+activeButton;
-  let classId = "pressed"+activeButton;
+  let activeBtnTag = "#" + activeButton;
+  let classId = "pressed" + activeButton;
   $(activeBtnTag).addClass(classId);
 
-  switch(activeButton){
+  switch (activeButton) {
     case 1:
       var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3");
       simonSound.play();
-    break;
+      break;
     case 2:
       var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3");
       simonSound.play();
-    break;
+      break;
     case 3:
       var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3");
       simonSound.play();
-    break;
+      break;
     case 4:
       var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3");
       simonSound.play();
-    break;
+      break;
   }
 
-  setTimeout(()=>{
+  setTimeout(() => {
     $(activeBtnTag).removeClass(classId);
   }, 430);
 
 }
 
 //do something when the player clicks
-function playerInput(input){
-  if(playerCanClick){
+function playerInput(input) {
+  if (playerCanClick) {
     soundAndLight(input);
     playerSequence.push(input);
     console.log(playerSequence);
-    if(input == randomSequence[playerSeqI]){
-      console.log("ok, clicked right");
-      playerSeqI == randomSequence.length-1 ? aNewTurn() : playerSeqI++;
-    }else{
+    if (input == randomSequence[playerSeqI]) {
+      playerSeqI == randomSequence.length - 1 ? aNewTurn() : playerSeqI++;
+    } else {
       var badSound = new Audio("sounds/wrong.mp3");
       badSound.play();
-      console.log("sequence not ok, clicked wrong");  //strict mode, finish the game
-      if(strictModeOn){
-        endGame();
-      }else{
-        console.log("wrong answer, replay the sequence");
-        //replays the sequence
-        setTimeout(()=>{
+      strictModeOn ? endGame() :
+        setTimeout(() => {
           sequencePlayer();
         }, 500);
-      }
 
     }
-  }else{
-    console.log("You can't click!");
   }
 
 }
 
 
-function aNewTurn(){
+function aNewTurn() {
   playerCanClick = false;
   let aNewNum = Math.floor(Math.random() * 4) + 1;
   randomSequence.push(aNewNum);
-  console.log("new push: "+aNewNum);
-  console.log(randomSequence);
-  $("#display-div").html("LEVEL<br>"+randomSequence.length);
-  setTimeout(()=>{
+  $("#display-div").html("LEVEL<br>" + randomSequence.length);
+  setTimeout(() => {
     sequencePlayer();
   }, 500);
 
 }
 //play the random sequence
 
-function sequencePlayer(){
+function sequencePlayer() {
   //if the player won:
-  if(randomSequence.length>20){
-    console.log("won");
+  if (randomSequence.length > 20) {
     $("#display-div").html("YOU<br>WIN!");
-    for(let w=1; w<5; w++){
-      let activeBtnTagW = "#"+w;
-      let classIdW = "pressed"+w;
-      $(activeBtnTagW).addClass(classIdW);
-    }
-    $("#START").addClass("pressed");
+    lightAllButtons();
     return;
   }
   //otherwise
-  console.log("sequencePlayer");
-  let i=0;
+  let i = 0;
   var iPlayInterval = setInterval(iPlay, 450);
 
-  function iPlay(){
-    console.log("sequencePlayer soundAndLight");
-    if(i<randomSequence.length){
-      console.log("randomSequencei: "+ randomSequence[i]);
+  function iPlay() {
+    if (i < randomSequence.length) {
+      console.log("randomSequencei: " + randomSequence[i]);
       let iBtn = randomSequence[i];
       soundAndLight(iBtn);
       i++;
-    }else{
+    } else {
       clearInterval(iPlayInterval);
-      //visszadobja a labdát azzal, hogy the player can click and his sequence is empty
-      setTimeout(function(){
-        playerSequence =[];
+      //gives control back as the player can click and his sequence is empty
+      setTimeout(function() {
+        playerSequence = [];
         playerSeqI = 0;
         playerCanClick = true;
       }, 100);
@@ -153,15 +134,34 @@ function sequencePlayer(){
   }
 }
 
-function endGame(){
+function lightAllButtons() {
+  for (let i = 1; i < 5; i++) {
+    let activeBtnTagI = "#" + i;
+    let classIdI = "pressed" + i;
+    $(activeBtnTagI).addClass(classIdI);
+  }
+  $(".btn").addClass("pressed");
+}
+
+function removeButtonChanges() {
+  $(".btn").removeClass("over");
+  $(".btn").removeClass("pressed");
+  for (let i = 1; i < 5; i++) {
+    let activeBtnTagI = "#" + i;
+    let classIdI = "pressed" + i;
+    $(activeBtnTagI).removeClass(classIdI);
+  }
+}
+
+function endGame() {
   console.log("pak pak pak paaaaaak");
   randomSequence = [];
   $("#display-div").html("TOO<br>BAD!");
   $(".btn").addClass("over");
-  //startClickable = true;
 }
-function restart(){
+
+function restart() {
   randomSequence = [];
-  $(".btn").removeClass("over");
+  removeButtonChanges();
   aNewTurn();
 }
