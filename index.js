@@ -1,5 +1,11 @@
 //global variables
 var playerCanClick = false;
+var colorCode = {
+  "green": 1,
+  "red": 2,
+  "yellow": 3,
+  "blue": 4
+};
 var randomSequence = [];
 var playerSequence = []; // restarted when correct for the full sequence
 var playerSeqI = 0;
@@ -8,23 +14,23 @@ var strictModeOn = true;
 //event handlers
 
 $("#1").click(() => {
-  console.log("clicked 1");
-  playerInput(1);
+
+  playerInput(colorCode.green);
 });
 $("#2").click(() => {
-  console.log("clicked 2");
-  playerInput(2);
+
+  playerInput(colorCode.red);
 });
 $("#3").click(() => {
-  console.log("clicked 3");
-  playerInput(3);
+
+  playerInput(colorCode.yellow);
 });
 $("#4").click(() => {
-  console.log("clicked 4");
-  playerInput(4);
+
+  playerInput(colorCode.blue);
 });
 $("#START").click(() => {
-  console.log("clicked start");
+
   $("#START").text("RESTART");
   restart();
 });
@@ -46,19 +52,19 @@ function soundAndLight(activeButton) {
   $(activeBtnTag).addClass(classId);
 
   switch (activeButton) {
-    case 1:
+    case colorCode.green:
       var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3");
       simonSound.play();
       break;
-    case 2:
+    case colorCode.red:
       var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3");
       simonSound.play();
       break;
-    case 3:
+    case colorCode.yellow:
       var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3");
       simonSound.play();
       break;
-    case 4:
+    case colorCode.blue:
       var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3");
       simonSound.play();
       break;
@@ -154,7 +160,6 @@ function removeButtonChanges() {
 }
 
 function endGame() {
-  console.log("pak pak pak paaaaaak");
   randomSequence = [];
   $("#display-div").html("TOO<br>BAD!");
   $(".btn").addClass("over");
