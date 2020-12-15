@@ -6,6 +6,8 @@ var colorCode = {
   "yellow": 3,
   "blue": 4
 };
+
+var soundList = [0]; //zero is not used as a colorCode, but needed for simplicity
 var randomSequence = [];
 var playerSequence = []; // restarted when correct for the full sequence
 var playerSeqI = 0;
@@ -39,7 +41,7 @@ $("#strictmode").click(() => {
   console.log("strictmode toggled to " + strictModeOn);
   $("#strictmode").toggleClass("strict-off");
   $("#strictmode").toggleClass("strict-on");
-  strictModeOn ? $("#strictmode").html("STRICT MODE ON") : $("#strictmode").html("STRICT MODE OFF");
+  strictModeOn ? $("#strictmode").html("STRICT<br>MODE ON") : $("#strictmode").html("STRICT<br>MODE OFF");
 });
 
 function soundAndLight(activeButton) {
@@ -53,19 +55,25 @@ function soundAndLight(activeButton) {
 
   switch (activeButton) {
     case colorCode.green:
-      var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3");
+
+      var simonSound = soundList[colorCode.green];
       simonSound.play();
+
+      console.log(soundList[colorCode.green]);
       break;
     case colorCode.red:
-      var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3");
+
+      var simonSound = soundList[colorCode.red];
       simonSound.play();
       break;
     case colorCode.yellow:
-      var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3");
+
+      var simonSound = soundList[colorCode.yellow];
       simonSound.play();
       break;
     case colorCode.blue:
-      var simonSound = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3");
+
+      var simonSound = soundList[colorCode.blue];
       simonSound.play();
       break;
   }
@@ -105,7 +113,7 @@ function aNewTurn() {
   $("#display-div").html("LEVEL<br>" + randomSequence.length);
   setTimeout(() => {
     sequencePlayer();
-  }, 500);
+  }, 430);
 
 }
 //play the random sequence
@@ -119,7 +127,7 @@ function sequencePlayer() {
   }
   //otherwise
   let i = 0;
-  var iPlayInterval = setInterval(iPlay, 450);
+  var iPlayInterval = setInterval(iPlay, 500);
 
   function iPlay() {
     if (i < randomSequence.length) {
@@ -170,3 +178,13 @@ function restart() {
   removeButtonChanges();
   aNewTurn();
 }
+
+function soundListAdder() {
+  console.log("adder");
+  for (let i = 1; i < 5; i++) {
+    soundList.push(new Audio(`https://s3.amazonaws.com/freecodecamp/simonSound${i}.mp3`));
+  }
+  console.log(soundList);
+}
+//This needs to run at start
+soundListAdder();
