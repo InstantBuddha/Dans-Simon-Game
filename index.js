@@ -16,29 +16,28 @@ var strictModeOn = true;
 //event handlers
 
 $("#1").click(() => {
-
   playerInput(colorCode.green);
 });
-$("#2").click(() => {
 
+$("#2").click(() => {
   playerInput(colorCode.red);
 });
-$("#3").click(() => {
 
+$("#3").click(() => {
   playerInput(colorCode.yellow);
 });
-$("#4").click(() => {
 
+$("#4").click(() => {
   playerInput(colorCode.blue);
 });
-$("#START").click(() => {
 
+$("#START").click(() => {
   $("#START").text("RESTART");
   restart();
 });
+
 $("#strictmode").click(() => {
   strictModeOn = !strictModeOn;
-  console.log("strictmode toggled to " + strictModeOn);
   $("#strictmode").toggleClass("strict-off");
   $("#strictmode").toggleClass("strict-on");
   strictModeOn ? $("#strictmode").html("STRICT<br>MODE ON") : $("#strictmode").html("STRICT<br>MODE OFF");
@@ -55,32 +54,25 @@ function soundAndLight(activeButton) {
 
   switch (activeButton) {
     case colorCode.green:
-
-      var simonSound = soundList[colorCode.green];
-      simonSound.play();
-
-      console.log(soundList[colorCode.green]);
+      soundList[colorCode.green].play();
       break;
+
     case colorCode.red:
-
-      var simonSound = soundList[colorCode.red];
-      simonSound.play();
+      soundList[colorCode.red].play();
       break;
+
     case colorCode.yellow:
-
-      var simonSound = soundList[colorCode.yellow];
-      simonSound.play();
+      soundList[colorCode.yellow].play();
       break;
-    case colorCode.blue:
 
-      var simonSound = soundList[colorCode.blue];
-      simonSound.play();
+    case colorCode.blue:
+      soundList[colorCode.blue].play();
       break;
   }
 
   setTimeout(() => {
     $(activeBtnTag).removeClass(classId);
-  }, 430);
+  }, 450);
 
 }
 
@@ -113,11 +105,11 @@ function aNewTurn() {
   $("#display-div").html("LEVEL<br>" + randomSequence.length);
   setTimeout(() => {
     sequencePlayer();
-  }, 430);
+  }, 500);
 
 }
-//play the random sequence
 
+//play the random sequence
 function sequencePlayer() {
   //if the player won:
   if (randomSequence.length > 20) {
@@ -142,7 +134,7 @@ function sequencePlayer() {
         playerSequence = [];
         playerSeqI = 0;
         playerCanClick = true;
-      }, 100);
+      }, 200);
 
     }
   }
@@ -180,11 +172,9 @@ function restart() {
 }
 
 function soundListAdder() {
-  console.log("adder");
   for (let i = 1; i < 5; i++) {
     soundList.push(new Audio(`https://s3.amazonaws.com/freecodecamp/simonSound${i}.mp3`));
   }
-  console.log(soundList);
 }
 //This needs to run at start
 soundListAdder();
