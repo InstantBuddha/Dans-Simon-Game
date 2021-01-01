@@ -48,24 +48,29 @@ function soundAndLight(activeButton) {
   //#2 red
   //#3 yellow
   //#4 blue
+  console.log("btn: "+ activeButton);
   let activeBtnTag = "#" + activeButton;
   let classId = "pressed" + activeButton;
   $(activeBtnTag).addClass(classId);
 
   switch (activeButton) {
     case colorCode.green:
+      soundList[colorCode.green].currentTime = 0;
       soundList[colorCode.green].play();
       break;
 
     case colorCode.red:
+    soundList[colorCode.red].currentTime = 0;
       soundList[colorCode.red].play();
       break;
 
     case colorCode.yellow:
+    soundList[colorCode.yellow].currentTime = 0;
       soundList[colorCode.yellow].play();
       break;
 
     case colorCode.blue:
+    soundList[colorCode.blue].currentTime = 0;
       soundList[colorCode.blue].play();
       break;
   }
